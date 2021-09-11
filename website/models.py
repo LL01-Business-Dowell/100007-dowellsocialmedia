@@ -12,20 +12,20 @@ class User(models.Model):
 
 class IndustryData(models.Model):
     CHOICES = (
-        ('Technology & Telecom 1', 'Option 1'),
-        ('Food & Beverages', 'Option 2'),
-        ('Travel & Leisure', 'Option 2'),
-        ('Restaurants & Hotels', 'Option 2'),
-        ('Automotive', 'Option 2'),
-        ('Apparel', 'Option 2'),
-        ('Banking & Insurance', 'Option 2'),
-        ('Chain stores', 'Option 2'),
-        ('Alcohol', 'Option 2'),
-        ('Tobacco', 'Option 2'),
-        ('Business Services & consultancies', 'Option 2'),
-        ('Transportation', 'Option 2'),
-        ('Media', 'Option 2'),
-        ('Heavy equipments', 'Option 2'),
+        ('Technology & Telecom', 'Technology & Telecom'),
+        ('Food & Beverages', 'Food & Beverages'),
+        ('Travel & Leisure', 'Travel & Leisure'),
+        ('Restaurants & Hotels', 'Restaurants & Hotels'),
+        ('Automotive', 'Automotive'),
+        ('Apparel', 'Apparel'),
+        ('Banking & Insurance', 'Banking & Insurance'),
+        ('Chain stores', 'Chain stores'),
+        ('Alcohol', 'Alcohol'),
+        ('Tobacco', 'Tobacco'),
+        ('Business Services & consultancies', 'Business Services & consultancies'),
+        ('Transportation', 'Transportation'),
+        ('Media', 'Media'),
+        ('Heavy equipments', 'Heavy equipments'),
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     target_industry = models.CharField(max_length=100, null=False, blank=False, choices=CHOICES)
@@ -34,14 +34,14 @@ class IndustryData(models.Model):
 
 class Sentences(models.Model):
     CHOICES = (
-        ('Livinglab', 'Option 1'),
-        ('Innovation', 'Option 1'),
-        ('User experience', 'Option 1'),
-        ('Storytelling', 'Option 1'),
-        ('Consumer Behaviour', 'Option 1'),
-        ('Behavioral economics', 'Option 1'),
-        ('Consumer Insights', 'Option 1'),
-        ('Statistics', 'Option 1'),
+        ('Livinglab', 'Livinglab'),
+        ('Innovation', 'Innovation'),
+        ('User experience', 'User experience'),
+        ('Storytelling', 'Storytelling'),
+        ('Consumer Behaviour', 'Consumer Behaviour'),
+        ('Behavioral economics', 'Behavioral economics'),
+        ('Consumer Insights', 'Consumer Insights'),
+        ('Statistics', 'Statistics'),
 
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
