@@ -28,18 +28,25 @@ class IndustryData(models.Model):
         ('Heavy equipments', 'Option 2'),
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    target_industry = models.CharField(max_length=30, null=False, blank=False, choices=CHOICES)
-    target_product = models.CharField(max_length=30, null=False, blank=False)
+    target_industry = models.CharField(max_length=100, null=False, blank=False, choices=CHOICES)
+    target_product = models.CharField(max_length=100, null=False, blank=False)
 
 
 class Sentences(models.Model):
     CHOICES = (
-        ('Technology & Telecom 1', 'Option 1'),
+        ('Livinglab', 'Option 1'),
+        ('Innovation', 'Option 1'),
+        ('User experience', 'Option 1'),
+        ('Storytelling', 'Option 1'),
+        ('Consumer Behaviour', 'Option 1'),
+        ('Behavioral economics', 'Option 1'),
+        ('Consumer Insights', 'Option 1'),
+        ('Statistics', 'Option 1'),
 
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    subject = models.CharField(max_length=30, null=False, blank=False,choices=CHOICES)
-    object = models.CharField(max_length=30, null=False, blank=False)
-    verb = models.CharField(max_length=30, null=False, blank=False)
-    adjective = models.CharField(max_length=30, null=False, blank=False)
-    sentence = models.TextField(max_length=30)
+    subject = models.CharField(max_length=100, null=False, blank=False,choices=CHOICES)
+    object = models.CharField(max_length=100, null=False, blank=False)
+    verb = models.CharField(max_length=100, null=False, blank=False)
+    adjective = models.CharField(max_length=100, null=False, blank=False)
+    sentence = models.TextField(max_length=400)
