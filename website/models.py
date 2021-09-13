@@ -28,8 +28,8 @@ class IndustryData(models.Model):
         ('Heavy equipments', 'Heavy equipments'),
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    target_industry = models.CharField(max_length=100, null=False, blank=False, choices=CHOICES)
-    target_product = models.CharField(max_length=100, null=False, blank=False)
+    target_industry = models.CharField(max_length=100,  blank=False, choices=CHOICES)
+    target_product = models.CharField(max_length=100, blank=False)
 
 
 class Sentences(models.Model):
@@ -45,8 +45,8 @@ class Sentences(models.Model):
 
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    subject = models.CharField(max_length=100, null=False, blank=False,choices=CHOICES)
-    object = models.CharField(max_length=100, null=False, blank=False)
-    verb = models.CharField(max_length=100, null=False, blank=False)
-    adjective = models.CharField(max_length=100, null=False, blank=False)
+    subject = models.CharField(max_length=100, blank=False,choices=CHOICES)
+    object = models.CharField(max_length=100,  blank=False)
+    verb = models.CharField(max_length=100,  blank=False)
+    adjective = models.CharField(max_length=100,  blank=False)
     sentence = models.TextField(max_length=400)

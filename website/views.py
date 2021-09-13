@@ -1,8 +1,5 @@
-import os
-
+import requests
 from django.http import HttpResponse
-from django.shortcuts import render
-
 # Create your views here.
 from django.shortcuts import render
 from formtools.wizard.views import SessionWizardView
@@ -10,43 +7,37 @@ from formtools.wizard.views import SessionWizardView
 from gform2website import settings
 from website.forms import UserEmailForm, IndustryForm, SentencesForm
 from website.models import User, IndustryData, Sentences
-import requests
-
-
-class FormWizard(SessionWizardView):
-    form_list = [UserEmailForm, IndustryForm, SentencesForm]
-    template_name = 'done.html'
-
-    def done(self, form_list, **kwargs):
-        print('done')
-
-        # url = "https://linguatools-sentence-generating.p.rapidapi.com/realise"
-        #
-        # form_data = [form.cleaned_data for form in form_list]
-        # email = form_data[0]['email']
-        # user = User.objects.create(email=email)
-        # target_industry = form_data[1]['target_industry']
-        # target_product = form_data[1]['target_product']
-        # industry = IndustryData.objects.create(user=user, target_industry=target_industry,
-        #                                        target_product=target_product)
-        #
-        # object = form_data[2]['object']
-        # subject = form_data[2]['subject']
-        # verb = form_data[2]['verb']
-        # adjective = form_data[2]['adjective']
-        # sentence = Sentences(user=user, object=object, subject=subject, verb=verb, adjective=adjective)
-        # querystring = {"object": object, "subject": subject, "verb": verb, 'adjective': adjective}
-        # print("{} is the query string".format(querystring))
-        # headers = {
-        #     'x-rapidapi-host': "linguatools-sentence-generating.p.rapidapi.com",
-        #     'x-rapidapi-key': settings.LINGUA_KEY
-        # }
-        #
-        # response = requests.request("GET", url, headers=headers, params=querystring)
-        # # sentence.sentence = response.text
-        # # sentence.save()
-        # return HttpResponse('<p>'+response.text+'</p>')
 
 
 def index(request):
-    return render(request, 'home.html')
+    emailForm = UserEmailForm()
+    industryForm = IndustryForm()
+    sentencesForm = SentencesForm()
+    forms = {'emailForm': emailForm, 'industryForm': industryForm, 'sentencesForm': sentencesForm}
+    if request.method == "POST":
+        emailForm = UserEmailForm(request.POST)
+        industryForm = IndustryForm(request.POST)
+        sentencesForm = SentencesForm(request.POST)
+        if emailForm.is_valid() and industryForm.is_valid() and sentencesForm.is_valid():
+            url = "https://linguatools-sentence-generating.p.rapidapi.com/realise"
+            user = emailForm.save()
+            industry = industryForm.save(commit=False)
+            industry.user = user
+            industry.save()
+            sentence = sentencesForm.save(commit=False)
+            object = sentencesForm.cleaned_data['object']
+            subject = sentencesForm.cleaned_data['subject']
+            verb = sentencesForm.cleaned_data['verb']
+            adjective = sentencesForm.cleaned_data['adjective']
+            sentence = Sentences(user=user, object=object, subject=subject, verb=verb, adjective=adjective)
+            querystring = {"object": object, "subject": subject, "verb": verb, "objmod": adjective}
+            headers = {
+                'x-rapidapi-host': "linguatools-sentence-generating.p.rapidapi.com",
+                'x-rapidapi-key': settings.LINGUA_KEY
+            }
+
+            response = requests.request("GET", url, headers=headers, params=querystring)
+            sentence.sentence = response.json()['sentence']
+            sentence.save()
+            return render(request,'answer_display.html',{'sentence':response.json()['sentence']})
+    return render(request, 'stepwise.html', context=forms)
