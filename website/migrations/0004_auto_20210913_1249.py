@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('website', '0003_auto_20210911_1842'),
     ]
@@ -13,11 +12,24 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='industrydata',
             name='target_industry',
-            field=models.CharField(choices=[('Technology & Telecom', 'Technology & Telecom'), ('Food & Beverages', 'Food & Beverages'), ('Travel & Leisure', 'Travel & Leisure'), ('Restaurants & Hotels', 'Restaurants & Hotels'), ('Automotive', 'Automotive'), ('Apparel', 'Apparel'), ('Banking & Insurance', 'Banking & Insurance'), ('Chain stores', 'Chain stores'), ('Alcohol', 'Alcohol'), ('Tobacco', 'Tobacco'), ('Business Services & consultancies', 'Business Services & consultancies'), ('Transportation', 'Transportation'), ('Media', 'Media'), ('Heavy equipments', 'Heavy equipments')], max_length=100),
+            field=models.CharField(
+                choices=[('Technology & Telecom', 'Technology & Telecom'), ('Food & Beverages', 'Food & Beverages'),
+                         ('Travel & Leisure', 'Travel & Leisure'), ('Restaurants & Hotels', 'Restaurants & Hotels'),
+                         ('Automotive', 'Automotive'), ('Apparel', 'Apparel'),
+                         ('Banking & Insurance', 'Banking & Insurance'), ('Chain stores', 'Chain stores'),
+                         ('Alcohol', 'Alcohol'), ('Tobacco', 'Tobacco'),
+                         ('Business Services & consultancies', 'Business Services & consultancies'),
+                         ('Transportation', 'Transportation'), ('Media', 'Media'),
+                         ('Heavy equipments', 'Heavy equipments')], max_length=100),
         ),
         migrations.AlterField(
             model_name='sentences',
             name='subject',
-            field=models.CharField(choices=[('Livinglab', 'Livinglab'), ('Innovation', 'Innovation'), ('User experience', 'User experience'), ('Storytelling', 'Storytelling'), ('Consumer Behaviour', 'Consumer Behaviour'), ('Behavioral economics', 'Behavioral economics'), ('Consumer Insights', 'Consumer Insights'), ('Statistics', 'Statistics')], max_length=100),
+            field=models.CharField(choices=[('Livinglab', 'Livinglab'), ('Innovation', 'Innovation'),
+                                            ('User experience', 'User experience'), ('Storytelling', 'Storytelling'),
+                                            ('Consumer Behaviour', 'Consumer Behaviour'),
+                                            ('Behavioral economics', 'Behavioral economics'),
+                                            ('Consumer Insights', 'Consumer Insights'), ('Statistics', 'Statistics')],
+                                   max_length=100),
         ),
     ]

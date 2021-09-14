@@ -1,12 +1,10 @@
 import requests
-from django.http import HttpResponse
 # Create your views here.
 from django.shortcuts import render
-from formtools.wizard.views import SessionWizardView
 
 from gform2website import settings
 from website.forms import UserEmailForm, IndustryForm, SentencesForm
-from website.models import User, IndustryData, Sentences
+from website.models import Sentences
 
 
 def index(request):
@@ -24,13 +22,15 @@ def index(request):
             industry = industryForm.save(commit=False)
             industry.user = user
             industry.save()
-            sentence = sentencesForm.save(commit=False)
             object = sentencesForm.cleaned_data['object']
             subject = sentencesForm.cleaned_data['subject']
             verb = sentencesForm.cleaned_data['verb']
+            objdet = sentencesForm.cleaned_data['object_adjective']
+            subjdet = sentencesForm.cleaned_data['subject_adjective']
             adjective = sentencesForm.cleaned_data['adjective']
             sentence = Sentences(user=user, object=object, subject=subject, verb=verb, adjective=adjective)
-            querystring = {"object": object, "subject": subject, "verb": verb, "objmod": adjective}
+            querystring = {"object": object, "subject": subject, "verb": verb, "objmod": adjective, 'subjdet': subjdet,
+                           'objdet': objdet}
             headers = {
                 'x-rapidapi-host': "linguatools-sentence-generating.p.rapidapi.com",
                 'x-rapidapi-key': settings.LINGUA_KEY
@@ -39,5 +39,5 @@ def index(request):
             response = requests.request("GET", url, headers=headers, params=querystring)
             sentence.sentence = response.json()['sentence']
             sentence.save()
-            return render(request,'answer_display.html',{'sentence':response.json()['sentence']})
+            return render(request, 'answer_display.html', {'sentence': response.json()['sentence']})
     return render(request, 'stepwise.html', context=forms)
