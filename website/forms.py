@@ -8,7 +8,7 @@ class UserEmailForm(forms.ModelForm):
         model = User
         fields = '__all__'
         widgets = {
-            'email': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class': 'form-control.'}),
         }
 
 
@@ -27,10 +27,10 @@ class SentencesForm(forms.ModelForm):
         model = Sentences
         fields = ('subject_adjective','subject','object_adjective', 'object', 'verb', 'adjective')
         widgets = {
-            'subject_adjective': forms.Select(attrs={'class': 'form-select col-6'}),
-            'subject': forms.Select(attrs={'class': 'form-select col-6'}),
-            'object_adjective': forms.Select(attrs={'class': 'form-select col-6'}),
-            'object': forms.TextInput(attrs={'class': 'form-control col-6'}),
+            'subject_adjective': forms.Select(attrs={'class': 'form-select'}),
+            'subject': forms.Select(attrs={'class': 'form-select'}),
+            'object_adjective': forms.Select(attrs={'class': 'form-select'}),
+            'object': forms.TextInput(attrs={'class': 'form-control'}),
             'verb': forms.TextInput(attrs={'class': 'form-control'}),
             'adjective': forms.TextInput(attrs={'class': 'form-control'}),
         }
