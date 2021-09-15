@@ -72,6 +72,13 @@
     #submitBtn {
         display: none;
     }
+
+    .custom-radio-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 4px;
+    }
+
 </style>
 <body>
 
@@ -151,15 +158,20 @@
         {% endfor %}
     </div>
     <div class="tab"><h1><b>Sentence Part one</b></h1>
-        <span class="input-group mb-3"><span>{{ sentencesForm.subject_adjective.label }}: </span>&nbsp;{{ sentencesForm.subject_adjective }}&nbsp;&nbsp;
-            <span>{{ sentencesForm.subject.label }}: </span>&nbsp;{{ sentencesForm.subject }}</span>&nbsp;&nbsp;
-        <span class="input-group mb-3"><span>{{ sentencesForm.object_adjective.label }}: </span>&nbsp;{{ sentencesForm.object_adjective }}&nbsp;&nbsp;
-                <span>{{ sentencesForm.object.label }}: </span>&nbsp;{{ sentencesForm.object }}</span>
+        <span class="input-group mb-3"><span>{{ sentencesForm.subject_determinant.label }}: </span>&nbsp;{{ sentencesForm.subject_determinant }}&nbsp;&nbsp;
+            <span>{{ sentencesForm.subject.label }}: </span>&nbsp;{{ sentencesForm.subject }}
+            &nbsp;{{ sentencesForm.subject_number }}
+
+        </span>&nbsp;&nbsp;
+        <span class="input-group mb-3"><span>{{ sentencesForm.object_determinant.label }}: </span>&nbsp;{{ sentencesForm.object_determinant }}&nbsp;&nbsp;
+                <span>{{ sentencesForm.object.label }}: </span>&nbsp;{{ sentencesForm.object }}
+            &nbsp;{{ sentencesForm.object_number }}
+        </span>
         <span class="row"><span>{{ sentencesForm.verb.label }}: </span>{{ sentencesForm.verb }}</span>
         <span class="row"><span>{{ sentencesForm.adjective.label }}: </span>{{ sentencesForm.adjective }}</span>
     </div>
     <div class="tab"><h1><b>Sentence Grammar</b></h1>
-        <span class="input-group mb-3"><span>{{ sentencesForm.tense.label }}: </span>&nbsp;{{ sentencesForm.tense }}&nbsp;&nbsp</span>&nbsp;&nbsp;
+        <span class=" row input-group mb-3"><span>{{ sentencesForm.tense.label }}: </span>{{ sentencesForm.tense }}&nbsp;&nbsp</span>&nbsp;&nbsp;
         <span class="input-group mb-3"><span>{{ sentencesForm.sentence_art.label }}: </span>&nbsp;{{ sentencesForm.sentence_art }}&nbsp;&nbsp;
                 <span>{{ sentencesForm.modal_verb.label }}: </span>&nbsp;{{ sentencesForm.modal_verb }}</span>
         <span class="row"><span>{{ sentencesForm.progressive.label }}: </span>{{ sentencesForm.progressive }}</span>

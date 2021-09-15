@@ -33,7 +33,7 @@ class IndustryData(models.Model):
 
 
 class Sentences(models.Model):
-    CHOICES = (
+    SUBJECT_CHOICES = (
         ('Livinglab', 'Livinglab'),
         ('Innovation', 'Innovation'),
         ('User experience', 'User experience'),
@@ -58,6 +58,12 @@ class Sentences(models.Model):
         ('Who(subject)', 'Who(subject)'),
 
     )
+    TENSES = (
+        ('present', 'present'),
+        ('past', 'past'),
+        ('future', 'future'),
+
+    )
     MODAL_VERBS = (
         ('-none-', '-none-'),
         ('can', 'can'),
@@ -70,19 +76,20 @@ class Sentences(models.Model):
 
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    subject_determinant = models.CharField(max_length=100, blank=False, choices=DETERMINANTS)
-    subject = models.CharField(max_length=100, blank=False, choices=CHOICES)
+    subject_determinant = models.CharField(max_length=100, blank=False, choices=DETERMINANTS,
+                                           default=DETERMINANTS[0][0])
+    subject = models.CharField(max_length=100, blank=False, choices=SUBJECT_CHOICES, default=SUBJECT_CHOICES[0][0])
     subject_number = models.CharField(max_length=100, blank=False)
-    object_determinant = models.CharField(max_length=100, blank=False, choices=DETERMINANTS)
+    object_determinant = models.CharField(max_length=100, blank=False, choices=DETERMINANTS, default=DETERMINANTS[0][0])
     object = models.CharField(max_length=100, blank=False)
     object_number = models.CharField(max_length=100, blank=False)
     verb = models.CharField(max_length=100, blank=False)
     adjective = models.CharField(max_length=100, blank=False)
     sentence = models.TextField(max_length=400)
     #     for part two of the form
-    tense = models.CharField(max_length=100, blank=False)
-    sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS)
-    modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS)
+    tense = models.CharField(max_length=100, blank=False, choices=TENSES, default=TENSES[0][0])
+    sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
+    modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
     progressive = models.BooleanField(default=False)
     negated = models.BooleanField(default=False)
     perfect = models.BooleanField(default=False)

@@ -23,22 +23,17 @@ class IndustryForm(forms.ModelForm):
 
 
 class SentencesForm(forms.ModelForm):
-    TENSES = (
-        ('Present', 'Present'),
-        ('Past', 'Past'),
-        ('Future', 'Future'),
-
-    )
     NUMBERS = (
-        ('Singular', 'Singular'),
-        ('Plural', 'Plural'),
+        ('singular', 'singular'),
+        ('plural', 'plural'),
 
     )
-    # convert tenses to radio button input through the form class
-    tense = forms.ChoiceField(choices=TENSES, widget=forms.RadioSelect())
+
     # create radio buttons for singular/plural of subject and object
-    subject_number = forms.ChoiceField(choices=NUMBERS, widget=forms.RadioSelect())
-    object_number = forms.ChoiceField(choices=NUMBERS, widget=forms.RadioSelect())
+    subject_number = forms.ChoiceField(choices=NUMBERS, initial='singular',
+                                       widget=forms.RadioSelect(attrs={'class': "custom-radio-list "}))
+    object_number = forms.ChoiceField(choices=NUMBERS, initial='singular',
+                                      widget=forms.RadioSelect(attrs={'class': "custom-radio-list"}))
 
     class Meta:
         model = Sentences
