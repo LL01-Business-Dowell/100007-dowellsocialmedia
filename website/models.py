@@ -44,17 +44,49 @@ class Sentences(models.Model):
         ('Statistics', 'Statistics'),
 
     )
-    ADJECTIVES = (
+    DETERMINANTS = (
         ('-', ''),
         ('the', 'the'),
         ('a', 'a'),
         ('an', 'an'),
     )
+
+    SENTENCE_ARTS = (
+        ('Declarative', 'Declarative'),
+        ('Yes-no', 'Yes-no'),
+        ('What(object)', 'What(object)'),
+        ('Who(subject)', 'Who(subject)'),
+
+    )
+    MODAL_VERBS = (
+        ('-none-', '-none-'),
+        ('can', 'can'),
+        ('may', 'may'),
+        ('must', 'must'),
+        ('ought', 'ought'),
+        ('shall', 'shall'),
+        ('should', 'should'),
+        ('would', 'would'),
+
+    )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    subject_adjective = models.CharField(max_length=100, blank=False, choices=ADJECTIVES)
+    subject_adjective = models.CharField(max_length=100, blank=False, choices=DETERMINANTS)
     subject = models.CharField(max_length=100, blank=False, choices=CHOICES)
-    object_adjective = models.CharField(max_length=100, blank=False, choices=ADJECTIVES)
+    object_adjective = models.CharField(max_length=100, blank=False, choices=DETERMINANTS)
     object = models.CharField(max_length=100, blank=False)
     verb = models.CharField(max_length=100, blank=False)
     adjective = models.CharField(max_length=100, blank=False)
     sentence = models.TextField(max_length=400)
+    #     for part two of the form
+    tense = models.CharField(max_length=100, blank=False)
+    sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS)
+    modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS)
+    progressive=models.BooleanField(default=False)
+    negated=models.BooleanField(default=False)
+    perfect=models.BooleanField(default=False)
+    passive=models.BooleanField(default=False)
+
+
+
+
+
