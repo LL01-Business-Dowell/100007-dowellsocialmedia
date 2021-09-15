@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('website', '0004_auto_20210913_1249'),
     ]
@@ -13,11 +12,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='sentences',
             name='object_adjective',
-            field=models.CharField(choices=[('-', ''), ('the', 'the'), ('a', 'a'), ('an', 'an')], default=('-', ''), max_length=100),
+            field=models.CharField(choices=[('-', ''), ('the', 'the'), ('a', 'a'), ('an', 'an')], default=('-', ''),
+                                   max_length=100),
         ),
         migrations.AddField(
             model_name='sentences',
             name='subject_adjective',
-            field=models.CharField(choices=[('-', ''), ('the', 'the'), ('a', 'a'), ('an', 'an')], default=('-', ''), max_length=100),
+            field=models.CharField(choices=[('-', ''), ('the', 'the'), ('a', 'a'), ('an', 'an')], default=('-', ''),
+                                   max_length=100),
         ),
     ]

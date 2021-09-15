@@ -70,10 +70,12 @@ class Sentences(models.Model):
 
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    subject_adjective = models.CharField(max_length=100, blank=False, choices=DETERMINANTS)
+    subject_determinant = models.CharField(max_length=100, blank=False, choices=DETERMINANTS)
     subject = models.CharField(max_length=100, blank=False, choices=CHOICES)
-    object_adjective = models.CharField(max_length=100, blank=False, choices=DETERMINANTS)
+    subject_number = models.CharField(max_length=100, blank=False)
+    object_determinant = models.CharField(max_length=100, blank=False, choices=DETERMINANTS)
     object = models.CharField(max_length=100, blank=False)
+    object_number = models.CharField(max_length=100, blank=False)
     verb = models.CharField(max_length=100, blank=False)
     adjective = models.CharField(max_length=100, blank=False)
     sentence = models.TextField(max_length=400)
@@ -81,12 +83,7 @@ class Sentences(models.Model):
     tense = models.CharField(max_length=100, blank=False)
     sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS)
     modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS)
-    progressive=models.BooleanField(default=False)
-    negated=models.BooleanField(default=False)
-    perfect=models.BooleanField(default=False)
-    passive=models.BooleanField(default=False)
-
-
-
-
-
+    progressive = models.BooleanField(default=False)
+    negated = models.BooleanField(default=False)
+    perfect = models.BooleanField(default=False)
+    passive = models.BooleanField(default=False)

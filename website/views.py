@@ -28,6 +28,15 @@ def index(request):
             objdet = sentencesForm.cleaned_data['object_adjective']
             subjdet = sentencesForm.cleaned_data['subject_adjective']
             adjective = sentencesForm.cleaned_data['adjective']
+            # now for the grammar part of the sentence
+            tense = sentencesForm.cleaned_data['tense']
+            progressive = sentencesForm.cleaned_data['progressive']
+            perfect = sentencesForm.cleaned_data['perfect']
+            negated = sentencesForm.cleaned_data['negated']
+            passive = sentencesForm.cleaned_data['passive']
+            sentence_art = sentencesForm.cleaned_data['sentence_art']
+            modal_verb = sentencesForm.cleaned_data['modal_verb']
+
             sentence = Sentences(user=user, object=object, subject=subject, verb=verb, adjective=adjective)
             querystring = {"object": object, "subject": subject, "verb": verb, "objmod": adjective, 'subjdet': subjdet,
                            'objdet': objdet}
