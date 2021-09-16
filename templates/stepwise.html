@@ -86,7 +86,7 @@
     <!-- One "tab" for each step in the form: -->
     {% csrf_token %}
     <div class="tab">
-            <h1><b>Email ID input:</b></h1>
+        <h1><b>Email ID input:</b></h1>
 
         {% for input in emailForm %}
             <span class="row"><span>{{ input.label }}: </span>{{ input }}</span>

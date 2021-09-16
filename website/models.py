@@ -5,6 +5,9 @@ from django.db import models
 class User(models.Model):
     email = models.EmailField()
 
+    def __str__(self):
+        return self.email
+
     class Meta:
         verbose_name_plural = 'Users'
         db_table = "Emails"
@@ -30,6 +33,9 @@ class IndustryData(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     target_industry = models.CharField(max_length=100, blank=False, choices=CHOICES)
     target_product = models.CharField(max_length=100, blank=False)
+
+    def __str__(self):
+        return self.user
 
 
 class Sentences(models.Model):
@@ -94,5 +100,9 @@ class Sentences(models.Model):
     negated = models.BooleanField(default=False)
     perfect = models.BooleanField(default=False)
     passive = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.sentence
+
     class Meta:
-        verbose_name_plural='Sentences'
+        verbose_name_plural = 'Sentences'

@@ -79,12 +79,12 @@ WSGI_APPLICATION = 'gform2website.wsgi.application'
 
 # connection to mongodb database
 DATABASES = {
-        'default': {
-            'ENGINE': 'djongo',
-            'NAME': 'socialmediadb',
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'socialmediadb',
 
-        }
     }
+}
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
