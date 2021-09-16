@@ -86,7 +86,7 @@ class Sentences(models.Model):
     verb = models.CharField(max_length=100, blank=False)
     adjective = models.CharField(max_length=100, blank=False)
     sentence = models.TextField(max_length=400)
-    #     for part two of the form
+    #     for part two of the Modelform
     tense = models.CharField(max_length=100, blank=False, choices=TENSES, default=TENSES[0][0])
     sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
     modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
@@ -94,3 +94,5 @@ class Sentences(models.Model):
     negated = models.BooleanField(default=False)
     perfect = models.BooleanField(default=False)
     passive = models.BooleanField(default=False)
+    class Meta:
+        verbose_name_plural='Sentences'
