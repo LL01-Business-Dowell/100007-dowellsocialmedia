@@ -33,17 +33,13 @@ def index(request):
             # now for the grammar part of the sentence
             tense = sentencesForm.cleaned_data['tense']
             progressive = sentencesForm.cleaned_data['progressive']
-            if progressive:
-                progressive = 'progressive'
+
             perfect = sentencesForm.cleaned_data['perfect']
-            if perfect:
-                perfect = 'perfect'
+
             negated = sentencesForm.cleaned_data['negated']
-            if negated:
-                negated = 'negated'
+
             passive = sentencesForm.cleaned_data['passive']
-            if passive:
-                passive = 'passive'
+
             sentence_art = sentencesForm.cleaned_data['sentence_art']
             modal_verb = sentencesForm.cleaned_data['modal_verb']
             # save to database
@@ -65,6 +61,14 @@ def index(request):
                                  modal_verb=modal_verb
 
                                  )
+            if progressive:
+                progressive = 'progressive'
+            if perfect:
+                perfect = 'perfect'
+            if negated:
+                negated = 'negated'
+            if passive:
+                passive = 'passive'
             # create an api query string
             querystring = {
                 "object": object,

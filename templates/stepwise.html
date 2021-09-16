@@ -86,13 +86,16 @@
     <!-- One "tab" for each step in the form: -->
     {% csrf_token %}
     <div class="tab">
+            <h1><b>Email ID input:</b></h1>
+
         {% for input in emailForm %}
             <span class="row"><span>{{ input.label }}: </span>{{ input }}</span>
         {% endfor %}
     </div>
     <div class="tab">
-        Hashtags
 
+
+        <h1><b>Hashtags:</b></h1>
 
         <p class="hashtag">Use at least one hashtag from each group</p>
         {#todo continue from here to add hashtags#}
@@ -152,7 +155,8 @@
         <p class="hashtag">Step 6 - Upload as image /video and submit</p>
         <p class="hashtag">Step 7 - Select relevant social media channel to post</p>
     </div>
-    <div class="tab"><h1><b>Industry Information:</b></h1>
+    <div class="tab">
+        <h1><b>Industry Information:</b></h1>
         {% for input in industryForm %}
             <p><span>{{ input.label }}: </span>{{ input }}</p>
         {% endfor %}
