@@ -126,4 +126,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LINGUA_KEY = '19f9a261f5mshdaaf092fcd12168p11148cjsna15442d10392'
+LINGUA_KEY = 'LINGUAKEY'# todo replace with your key
