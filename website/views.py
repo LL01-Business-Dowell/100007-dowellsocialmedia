@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from gform2website import settings
 from website.forms import UserEmailForm, IndustryForm, SentencesForm
-from website.models import Sentences
+from website.models import Sentences, SentenceResults
 
 
 def index(request):
@@ -30,71 +30,90 @@ def index(request):
             subjdet = sentencesForm.cleaned_data['subject_determinant']
             subjnum = sentencesForm.cleaned_data['subject_number']
             adjective = sentencesForm.cleaned_data['adjective']
-            # now for the grammar part of the sentence
-            tense = sentencesForm.cleaned_data['tense']
-            progressive = sentencesForm.cleaned_data['progressive']
 
-            perfect = sentencesForm.cleaned_data['perfect']
+            # this code below is commented because the team lead requested that the code generates different sentences
+            # # now for the grammar part of the sentence
+            # tense = sentencesForm.cleaned_data['tense']
+            # progressive = sentencesForm.cleaned_data['progressive']
+            #
+            # perfect = sentencesForm.cleaned_data['perfect']
+            #
+            # negated = sentencesForm.cleaned_data['negated']
+            #
+            # passive = sentencesForm.cleaned_data['passive']
+            #
+            # sentence_art = sentencesForm.cleaned_data['sentence_art']
+            # modal_verb = sentencesForm.cleaned_data['modal_verb']
+            # # save to database
+            # sentence = Sentences(user=user,
+            #                      object=object,
+            #                      subject=subject,
+            #                      verb=verb,
+            #                      adjective=adjective,
+            #                      object_determinant=objdet,
+            #                      subject_determinant=subjdet,
+            #                      object_number=objnum,
+            #                      subject_number=subjnum,
+            #                      tense=tense,
+            #                      progressive=progressive,
+            #                      passive=passive,
+            #                      perfect=perfect,
+            #                      negated=negated,
+            #                      sentence_art=sentence_art,
+            #                      modal_verb=modal_verb
+            #
+            #                      )
+            # if progressive:
+            #     progressive = 'progressive'
+            # if perfect:
+            #     perfect = 'perfect'
+            # if negated:
+            #     negated = 'negated'
+            # if passive:
+            #     passive = 'passive'
+            # # create an api query string
+            # querystring = {
+            #     "object": object,
+            #     "subject": subject,
+            #     "verb": verb,
+            #     "objmod": adjective,
+            #     'subjdet': subjdet,
+            #     'objdet': objdet,
+            #     'objnum': objnum,
+            #     'passive': passive,
+            #     'progressive': progressive,
+            #     'modal': modal_verb,
+            #     'perfect': perfect,
+            #     'subjnum': subjnum,
+            #     'sentencetype': sentence_art,
+            #     'negated': negated,
+            #     'tense': tense
+            #
+            # }
+            # headers = {
+            #     'x-rapidapi-host': "linguatools-sentence-generating.p.rapidapi.com",
+            #     'x-rapidapi-key': settings.LINGUA_KEY
+            # }
+            #
+            # response = requests.request("GET", url, headers=headers, params=querystring)
+            #
+            # # sentence.sentence = response.json()['sentence']
+            # # sentence.save()
+            # return render(request, 'answer_display.html', {'sentence': response.json()['sentence']})
 
-            negated = sentencesForm.cleaned_data['negated']
+            sentence = Sentences.objects.create(user=user,
+                                                object=object,
+                                                subject=subject,
+                                                verb=verb,
+                                                adjective=adjective,
+                                                object_determinant=objdet,
+                                                subject_determinant=subjdet,
+                                                object_number=objnum,
+                                                subject_number=subjnum
+                                                )
+            sentence_results=SentenceResults(sentence=sentence)
 
-            passive = sentencesForm.cleaned_data['passive']
+            sentences_dictionary = {'sentences':[]}
 
-            sentence_art = sentencesForm.cleaned_data['sentence_art']
-            modal_verb = sentencesForm.cleaned_data['modal_verb']
-            # save to database
-            sentence = Sentences(user=user,
-                                 object=object,
-                                 subject=subject,
-                                 verb=verb,
-                                 adjective=adjective,
-                                 object_determinant=objdet,
-                                 subject_determinant=subjdet,
-                                 object_number=objnum,
-                                 subject_number=subjnum,
-                                 tense=tense,
-                                 progressive=progressive,
-                                 passive=passive,
-                                 perfect=perfect,
-                                 negated=negated,
-                                 sentence_art=sentence_art,
-                                 modal_verb=modal_verb
-
-                                 )
-            if progressive:
-                progressive = 'progressive'
-            if perfect:
-                perfect = 'perfect'
-            if negated:
-                negated = 'negated'
-            if passive:
-                passive = 'passive'
-            # create an api query string
-            querystring = {
-                "object": object,
-                "subject": subject,
-                "verb": verb,
-                "objmod": adjective,
-                'subjdet': subjdet,
-                'objdet': objdet,
-                'objnum': objnum,
-                'passive': passive,
-                'progressive': progressive,
-                'modal': modal_verb,
-                'perfect': perfect,
-                'subjnum': subjnum,
-                'sentencetype': sentence_art,
-                'negated': negated,
-                'tense': tense
-
-            }
-            headers = {
-                'x-rapidapi-host': "linguatools-sentence-generating.p.rapidapi.com",
-                'x-rapidapi-key': settings.LINGUA_KEY
-            }
-
-            response = requests.request("GET", url, headers=headers, params=querystring)
-            sentence.sentence = response.json()['sentence']
-            sentence.save()
-            return render(request, 'answer_display.html', {'sentence': response.json()['sentence']})
+            return render(request, 'answer_display.html', context=sentences_dictionary)
     return render(request, 'stepwise.html', context=forms)

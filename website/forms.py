@@ -39,8 +39,10 @@ class SentencesForm(forms.ModelForm):
         model = Sentences
         fields = (
             'subject_determinant', 'subject', 'subject_number', 'object_determinant', 'object', 'object_number',
-            'verb', 'adjective', 'tense', 'sentence_art',
-            'modal_verb', 'progressive', 'perfect', 'passive', 'negated')
+            'verb', 'adjective',
+            # 'tense', 'sentence_art',
+            # 'modal_verb', 'progressive', 'perfect', 'passive', 'negated'
+        )
         widgets = {
             'subject_determinant': forms.Select(attrs={'class': 'form-select'}),
             'subject': forms.Select(attrs={'class': 'form-select'}),
@@ -49,8 +51,8 @@ class SentencesForm(forms.ModelForm):
             'verb': forms.TextInput(attrs={'class': 'form-control'}),
             'adjective': forms.TextInput(attrs={'class': 'form-control'}),
             # for part two of the form
-            'tense': forms.Select(attrs={'class': 'form-select'}),
-            'sentence_art': forms.Select(attrs={'class': 'form-select'}),
-            'modal_verb': forms.Select(attrs={'class': 'form-select'}),
+            # 'tense': forms.Select(attrs={'class': 'form-select'}),
+            # 'sentence_art': forms.Select(attrs={'class': 'form-select'}),
+            # 'modal_verb': forms.Select(attrs={'class': 'form-select'}),
 
         }

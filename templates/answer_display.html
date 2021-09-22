@@ -21,14 +21,16 @@
     }
 
 
-
-
-
 </style>
 <body>
 
 <div id="ansDisplay">
-    <p>{{ sentence }}</p>
+    {#    <p>{{ sentence }}</p>#}
+
+    {% for sentence in sentences %}
+        <p>{{ sentence }}</p>
+
+    {% endfor %}
 </div>
 
 </body>

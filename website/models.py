@@ -91,18 +91,29 @@ class Sentences(models.Model):
     object_number = models.CharField(max_length=100, blank=False)
     verb = models.CharField(max_length=100, blank=False)
     adjective = models.CharField(max_length=100, blank=False)
-    sentence = models.TextField(max_length=400)
+    # sentence = models.TextField(max_length=400)# single sentence got from database
     #     for part two of the Modelform
-    tense = models.CharField(max_length=100, blank=False, choices=TENSES, default=TENSES[0][0])
-    sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
-    modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
-    progressive = models.BooleanField(default=False)
-    negated = models.BooleanField(default=False)
-    perfect = models.BooleanField(default=False)
-    passive = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.sentence
+    # tense = models.CharField(max_length=100, blank=False, choices=TENSES, default=TENSES[0][0])
+    # sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
+    # modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
+    # progressive = models.BooleanField(default=False)
+    # negated = models.BooleanField(default=False)
+    # perfect = models.BooleanField(default=False)
+    # passive = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name_plural = 'Sentences'
+        verbose_name_plural = 'Sentence grammar'
+
+
+class SentenceResults(models.Model):
+    sentence = models.ForeignKey(Sentences, on_delete=models.CASCADE)
+    present = models.TextField(max_length=400,null=True,blank=True)
+    past = models.TextField(max_length=400,null=True,blank=True)
+    future = models.TextField(max_length=400,null=True,blank=True)
+    progressive = models.TextField(max_length=400,null=True,blank=True)
+    negated = models.TextField(max_length=400,null=True,blank=True)
+    perfect = models.TextField(max_length=400,null=True,blank=True)
+    passive = models.TextField(max_length=400,null=True,blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Sentence results'
