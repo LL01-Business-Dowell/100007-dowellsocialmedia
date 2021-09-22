@@ -79,6 +79,13 @@
         margin: 4px;
     }
 
+    .required_field{
+        font-size: 2em;
+        color: red;
+        position: absolute;
+
+    }
+
 </style>
 <body>
 
@@ -89,7 +96,8 @@
         <h1><b>Email ID input:</b></h1>
 
         {% for input in emailForm %}
-            <span class="row"><span>{{ input.label }}: </span>{{ input }}</span>
+
+            <span class="row"><span>{{ input.label }}:{% if input.field.required %} <span class="required_field">*</span>{% endif %} </span>{{ input }}</span>
         {% endfor %}
     </div>
     <div class="tab">
@@ -158,31 +166,32 @@
     <div class="tab">
         <h1><b>Industry Information:</b></h1>
         {% for input in industryForm %}
-            <p><span>{{ input.label }}: </span>{{ input }}</p>
+            <p><span>{{ input.label }}: {% if input.field.required %} <span class=" required_field">*</span>&nbsp;&nbsp;{% endif %} </span>{{ input }}</p>
         {% endfor %}
     </div>
     <div class="tab"><h1><b>Sentence Part one</b></h1>
-        <span class="input-group mb-3"><span>{{ sentencesForm.subject_determinant.label }}: </span>&nbsp;{{ sentencesForm.subject_determinant }}&nbsp;&nbsp;
-            <span>{{ sentencesForm.subject.label }}: </span>&nbsp;{{ sentencesForm.subject }}
+        <span class="input-group mb-3"><span>{{ sentencesForm.subject_determinant.label }}:{% if sentencesForm.subject_determinant.field.required %} <span class=" required_field">*</span>&nbsp;&nbsp;{% endif %} </span>&nbsp;{{ sentencesForm.subject_determinant }}&nbsp;&nbsp;
+            <span>{{ sentencesForm.subject.label }}:{% if sentencesForm.subject.field.required %} <span class=" required_field">*</span>&nbsp;&nbsp; {% endif %} </span>&nbsp;{{ sentencesForm.subject }}
             &nbsp;{{ sentencesForm.subject_number }}
 
         </span>&nbsp;&nbsp;
-        <span class="input-group mb-3"><span>{{ sentencesForm.object_determinant.label }}: </span>&nbsp;{{ sentencesForm.object_determinant }}&nbsp;&nbsp;
-                <span>{{ sentencesForm.object.label }}: </span>&nbsp;{{ sentencesForm.object }}
+        <span class="input-group mb-3"><span>{{ sentencesForm.object_determinant.label }}: {% if sentencesForm.object_determinant.field.required %} <span class=" required_field">*</span>&nbsp;&nbsp;{% endif %}</span>&nbsp;{{ sentencesForm.object_determinant }}&nbsp;&nbsp;
+                <span>{{ sentencesForm.object.label }}: {% if sentencesForm.object_determinant.field.required %} <span class=" required_field">*</span>&nbsp;&nbsp; {% endif %} </span>&nbsp;{{ sentencesForm.object }}
             &nbsp;{{ sentencesForm.object_number }}
         </span>
-        <span class="row"><span>{{ sentencesForm.verb.label }}: </span>{{ sentencesForm.verb }}</span>
-        <span class="row"><span>{{ sentencesForm.adjective.label }}: </span>{{ sentencesForm.adjective }}</span>
+        <span class="row"><span>{{ sentencesForm.verb.label }}:{% if sentencesForm.verb.field.required %} <span class=" required_field">*</span>&nbsp;&nbsp;{% endif %} </span>{{ sentencesForm.verb }}</span>
+        <span class="row"><span>{{ sentencesForm.adjective.label }}: {% if sentencesForm.adjective.field.required %} <span class=" required_field">*</span>&nbsp;&nbsp; {% endif %}</span>{{ sentencesForm.adjective }}</span>
     </div>
-    <div class="tab"><h1><b>Sentence Grammar</b></h1>
-        <span class=" row input-group mb-3"><span>{{ sentencesForm.tense.label }}: </span>{{ sentencesForm.tense }}&nbsp;&nbsp</span>&nbsp;&nbsp;
-        <span class="input-group mb-3"><span>{{ sentencesForm.sentence_art.label }}: </span>&nbsp;{{ sentencesForm.sentence_art }}&nbsp;&nbsp;
-                <span>{{ sentencesForm.modal_verb.label }}: </span>&nbsp;{{ sentencesForm.modal_verb }}</span>
-        <span class="row"><span>{{ sentencesForm.progressive.label }}: </span>{{ sentencesForm.progressive }}</span>
-        <span class="row"><span>{{ sentencesForm.perfect.label }}: </span>{{ sentencesForm.perfect }}</span>
-        <span class="row"><span>{{ sentencesForm.negated.label }}: </span>{{ sentencesForm.negated }}</span>
-        <span class="row"><span>{{ sentencesForm.passive.label }}: </span>{{ sentencesForm.passive }}</span>
-    </div>
+{#todo remove final part in order to generate different messages#}
+{#    <div class="tab"><h1><b>Sentence Grammar</b></h1>#}
+{#        <span class=" row input-group mb-3"><span>{{ sentencesForm.tense.label }}: {% if sentencesForm.tense.field.required %} <span class=" required_field">*</span>{% endif %}</span>{{ sentencesForm.tense }}&nbsp;&nbsp</span>&nbsp;&nbsp;#}
+{#        <span class="input-group mb-3"><span>{{ sentencesForm.sentence_art.label }}: {% if sentencesForm.sentence_art.field.required %} <span class=" required_field">*</span>{% endif %}</span>&nbsp;{{ sentencesForm.sentence_art }}&nbsp;&nbsp;#}
+{#                <span>{{ sentencesForm.modal_verb.label }}: {% if sentencesForm.modal_verb.field.required %} <span class=" required_field">*</span>{% endif %}</span>&nbsp;{{ sentencesForm.modal_verb }}</span>#}
+{#        <span class="row"><span>{{ sentencesForm.progressive.label }}: {% if sentencesForm.progressive.field.required %} <span class=" required_field">*</span>{% endif %}</span>{{ sentencesForm.progressive }}</span>#}
+{#        <span class="row"><span>{{ sentencesForm.perfect.label }}:{% if sentencesForm.perfect.field.required %} <span class=" required_field">*</span>{% endif %} </span>{{ sentencesForm.perfect }}</span>#}
+{#        <span class="row"><span>{{ sentencesForm.negated.label }}: {% if sentencesForm.negated.field.required %} <span class=" required_field">*</span>{% endif %}</span>{{ sentencesForm.negated }}</span>#}
+{#        <span class="row"><span>{{ sentencesForm.passive.label }}:{% if sentencesForm.passive.field.required %} <span class=" required_field">*</span>{% endif %} </span>{{ sentencesForm.passive }}</span>#}
+{#    </div>#}
 
     <div style="overflow:auto;" class="mt-5">
         <div style="float:right;">
@@ -193,7 +202,6 @@
     </div>
     <!-- Circles which indicates the steps of the form: -->
     <div style="text-align:center;margin-top:40px;">
-        <span class="step"></span>
         <span class="step"></span>
         <span class="step"></span>
         <span class="step"></span>

@@ -22,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5v(w7r)%n1=4irn^7@@k%a5s6-kmp-5xmpd(5)qlptwe5yjelj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -76,17 +76,17 @@ WSGI_APPLICATION = 'gform2website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-
-# connection to mongodb database
 DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'socialmediadb',
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'socialmediadb',
 
+        }
     }
-}
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -126,4 +126,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LINGUA_KEY = 'LINGUAKEY'# todo replace with your key
+LINGUA_KEY = 'LINGUAKEY'  # todo replace with your key
