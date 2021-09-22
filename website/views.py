@@ -22,7 +22,7 @@ def index(request):
             industry = industryForm.save(commit=False)
             industry.user = user
             industry.save()
-            object = sentencesForm.cleaned_data['object']
+            object = sentencesForm.cleaned_data['object'].lower()
             subject = sentencesForm.cleaned_data['subject']
             verb = sentencesForm.cleaned_data['verb']
             objdet = sentencesForm.cleaned_data['object_determinant']
@@ -100,6 +100,42 @@ def index(request):
             # # sentence.sentence = response.json()['sentence']
             # # sentence.save()
             # return render(request, 'answer_display.html', {'sentence': response.json()['sentence']})
+            def api_call(tense='present', passive=False, progressive=False, modal_verb=None, perfect=False,
+                         sentence_art=None,
+                         negated=False):
+                querystring = {
+                    "object": object,
+                    "subject": subject,
+                    "verb": verb,
+                    "objmod": adjective,
+                    'subjdet': subjdet,
+                    'objdet': objdet,
+                    'objnum': objnum,
+                    'subjnum': subjnum,
+                    'tense': tense
+
+                }
+                if progressive:
+                    querystring['progressive'] = 'progressive'
+                if perfect:
+                    querystring['perfect'] = 'perfect'
+
+                if negated:
+                    querystring['negated'] = 'negated'
+
+                if passive:
+                    querystring['passive'] = 'passive'
+                if modal_verb is not None:
+                    querystring['modal'] = modal_verb
+                if sentence_art is not None:
+                    querystring['sentencetype'] = sentence_art
+
+                headers = {
+                    'x-rapidapi-host': "linguatools-sentence-generating.p.rapidapi.com",
+                    'x-rapidapi-key': settings.LINGUA_KEY
+                }
+
+                return requests.request("GET", url, headers=headers, params=querystring).json()['sentence']
 
             sentence = Sentences.objects.create(user=user,
                                                 object=object,
@@ -111,9 +147,18 @@ def index(request):
                                                 object_number=objnum,
                                                 subject_number=subjnum
                                                 )
-            sentence_results=SentenceResults(sentence=sentence)
+            sentence_results = SentenceResults(sentence=sentence)
+            past_tense = api_call(tense='past')
+            progressive = api_call(tense='past', progressive=True)
+            present_tense = api_call(tense='present')
+            future_tense = api_call(tense='future')
+            sentence_results.past = past_tense
+            sentence_results.future = future_tense
+            sentence_results.progressive = progressive
+            sentence_results.present = present_tense
+            sentence_results.save()
 
-            sentences_dictionary = {'sentences':[]}
+            sentences_dictionary = {'sentences': [past_tense, future_tense, present_tense, progressive]}
 
             return render(request, 'answer_display.html', context=sentences_dictionary)
     return render(request, 'stepwise.html', context=forms)

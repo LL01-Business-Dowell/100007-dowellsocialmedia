@@ -70,17 +70,7 @@ class Sentences(models.Model):
         ('future', 'future'),
 
     )
-    MODAL_VERBS = (
-        ('-none-', '-none-'),
-        ('can', 'can'),
-        ('may', 'may'),
-        ('must', 'must'),
-        ('ought', 'ought'),
-        ('shall', 'shall'),
-        ('should', 'should'),
-        ('would', 'would'),
 
-    )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     subject_determinant = models.CharField(max_length=100, blank=False, choices=DETERMINANTS,
                                            default=DETERMINANTS[0][0])
@@ -100,12 +90,24 @@ class Sentences(models.Model):
     # negated = models.BooleanField(default=False)
     # perfect = models.BooleanField(default=False)
     # passive = models.BooleanField(default=False)
-
+    def __str__(self):
+        return self.pk.__str__()
     class Meta:
         verbose_name_plural = 'Sentence grammar'
 
 
 class SentenceResults(models.Model):
+    MODAL_VERBS = (
+        ('-none-', '-none-'),
+        ('can', 'can'),
+        ('may', 'may'),
+        ('must', 'must'),
+        ('ought', 'ought'),
+        ('shall', 'shall'),
+        ('should', 'should'),
+        ('would', 'would'),
+
+    )
     sentence = models.ForeignKey(Sentences, on_delete=models.CASCADE)
     present = models.TextField(max_length=400,null=True,blank=True)
     past = models.TextField(max_length=400,null=True,blank=True)
@@ -114,6 +116,9 @@ class SentenceResults(models.Model):
     negated = models.TextField(max_length=400,null=True,blank=True)
     perfect = models.TextField(max_length=400,null=True,blank=True)
     passive = models.TextField(max_length=400,null=True,blank=True)
+
+    # sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
+    modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
 
     class Meta:
         verbose_name_plural = 'Sentence results'
