@@ -1,5 +1,6 @@
 import requests
 # Create your views here.
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from gform2website import settings
@@ -158,7 +159,18 @@ def index(request):
             sentence_results.present = present_tense
             sentence_results.save()
 
-            sentences_dictionary = {'sentences': [past_tense, future_tense, present_tense, progressive]}
+            sentences_dictionary = {'sentences': [past_tense, future_tense, present_tense, progressive],
+                                    'result_id': sentence_results.pk}
 
             return render(request, 'answer_display.html', context=sentences_dictionary)
     return render(request, 'stepwise.html', context=forms)
+
+
+def selected_result(request):
+    print('In selected result')
+    if request.method == 'POST':
+        result_id = request.POST.get('result_id')
+        selected_result = request.POST.get('gridRadios')
+        print("Result id{}".format(result_id))
+        print("Result{}".format(selected_result))
+        return HttpResponse('<p>The selected result is: {}</p>'.format(selected_result))
