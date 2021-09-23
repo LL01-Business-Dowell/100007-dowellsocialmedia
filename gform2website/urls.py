@@ -24,5 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('website.urls')),
 ]
-urlpatterns += url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATICFILES_DIRS}),
+urlpatterns += url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
 
