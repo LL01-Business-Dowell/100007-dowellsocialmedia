@@ -1,6 +1,5 @@
 import requests
 # Create your views here.
-from django.http import HttpResponse
 from django.shortcuts import render
 
 from gform2website import settings

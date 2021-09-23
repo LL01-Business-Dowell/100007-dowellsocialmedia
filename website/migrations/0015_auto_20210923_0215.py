@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('website', '0014_auto_20210922_1416'),
     ]
@@ -41,6 +40,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='sentenceresults',
             name='modal_verb',
-            field=models.CharField(choices=[('-none-', '-none-'), ('can', 'can'), ('may', 'may'), ('must', 'must'), ('ought', 'ought'), ('shall', 'shall'), ('should', 'should'), ('would', 'would')], default='-none-', max_length=100),
+            field=models.CharField(
+                choices=[('-none-', '-none-'), ('can', 'can'), ('may', 'may'), ('must', 'must'), ('ought', 'ought'),
+                         ('shall', 'shall'), ('should', 'should'), ('would', 'would')], default='-none-',
+                max_length=100),
         ),
     ]
