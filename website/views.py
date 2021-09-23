@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 from gform2website import settings
 from website.forms import UserEmailForm, IndustryForm, SentencesForm
-from website.models import Sentences, SentenceResults
+from website.models import Sentences, SentenceResults, SelectedResult
 
 
 def index(request):
@@ -167,10 +167,9 @@ def index(request):
 
 
 def selected_result(request):
-    print('In selected result')
     if request.method == 'POST':
         result_id = request.POST.get('result_id')
         selected_result = request.POST.get('gridRadios')
-        print("Result id{}".format(result_id))
-        print("Result{}".format(selected_result))
-        return HttpResponse('<p>The selected result is: {}</p>'.format(selected_result))
+        selected_result_obj = SelectedResult.objects.create(sentence_result=SentenceResults.objects.get(pk=result_id),
+                                                            selected_sentence=selected_result)
+        return render(request, 'display_selected_result.html', {'sentence': selected_result})

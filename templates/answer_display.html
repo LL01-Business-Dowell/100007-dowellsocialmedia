@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,47 +23,47 @@
         min-width: 300px;
     }
 
-.answer{
-    height: 40px;
-    background-color: #D3D3D3;
-    border-radius: 4px;
-    padding: 4px
-}
-.answer_radio{
-    float: right;
-}
+    .answer {
+        height: 40px;
+        background-color: #D3D3D3;
+        border-radius: 4px;
+        padding: 4px
+    }
+
+    .answer_radio {
+        float: right;
+    }
 </style>
 <body>
 
 <div id="ansDisplay">
-<form method="post" action="{% url 'selected_result' %}">
+    <form method="post" action="{% url 'selected_result' %}">
 
 
-{% csrf_token %}
-<input type="hidden" name="result_id" value="{{ result_id }}">
- {% for sentence in sentences %}
+        {% csrf_token %}
+        <input type="hidden" name="result_id" value="{{ result_id }}">
+        {% for sentence in sentences %}
 
-    <div class="answer">
-                    <p>{{ sentence }}
+            <div class="answer">
+                <p>{{ sentence }}
 
-                  <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="{{ sentence }}" ></span></p>
+                    <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
+                                                      id="gridRadios1" value="{{ sentence }}"></span></p>
 
-    </div>
+            </div>
 
- <br>
-    {% endfor %}
+            <br>
+        {% endfor %}
 
-<button type="submit" class="btn btn-success">SUBMIT</button>
-</form>
+        <button type="submit" class="btn btn-success">SUBMIT</button>
+    </form>
 
 </div>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
-
 
 
 </body>

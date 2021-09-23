@@ -81,6 +81,7 @@ class Sentences(models.Model):
     object_number = models.CharField(max_length=100, blank=False)
     verb = models.CharField(max_length=100, blank=False)
     adjective = models.CharField(max_length=100, blank=False)
+
     # sentence = models.TextField(max_length=400)# single sentence got from database
     #     for part two of the Modelform
     # tense = models.CharField(max_length=100, blank=False, choices=TENSES, default=TENSES[0][0])
@@ -92,6 +93,7 @@ class Sentences(models.Model):
     # passive = models.BooleanField(default=False)
     def __str__(self):
         return self.pk.__str__()
+
     class Meta:
         verbose_name_plural = 'Sentence grammar'
 
@@ -109,16 +111,21 @@ class SentenceResults(models.Model):
 
     )
     sentence = models.ForeignKey(Sentences, on_delete=models.CASCADE)
-    present = models.TextField(max_length=400,null=True,blank=True)
-    past = models.TextField(max_length=400,null=True,blank=True)
-    future = models.TextField(max_length=400,null=True,blank=True)
-    progressive = models.TextField(max_length=400,null=True,blank=True)
-    negated = models.TextField(max_length=400,null=True,blank=True)
-    perfect = models.TextField(max_length=400,null=True,blank=True)
-    passive = models.TextField(max_length=400,null=True,blank=True)
+    present = models.TextField(max_length=400, null=True, blank=True)
+    past = models.TextField(max_length=400, null=True, blank=True)
+    future = models.TextField(max_length=400, null=True, blank=True)
+    progressive = models.TextField(max_length=400, null=True, blank=True)
+    negated = models.TextField(max_length=400, null=True, blank=True)
+    perfect = models.TextField(max_length=400, null=True, blank=True)
+    passive = models.TextField(max_length=400, null=True, blank=True)
 
     # sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
     modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
 
     class Meta:
         verbose_name_plural = 'Sentence results'
+
+
+class SelectedResult(models.Model):
+    sentence_result = models.ForeignKey(SentenceResults, on_delete=models.CASCADE)
+    selected_sentence = models.CharField(max_length=200, null=False)
