@@ -152,14 +152,23 @@ def index(request):
             progressive = api_call(tense='past', progressive=True)
             present_tense = api_call(tense='present')
             future_tense = api_call(tense='future')
+            negated = api_call(negated=True)
+            perfect = api_call(perfect=True)
+            passive = api_call(passive=True)
             sentence_results.past = past_tense
             sentence_results.future = future_tense
             sentence_results.progressive = progressive
             sentence_results.present = present_tense
+            sentence_results.negated = negated
+            sentence_results.perfect = perfect
+            sentence_results.passive = passive
             sentence_results.save()
 
-            sentences_dictionary = {'sentences': [past_tense, future_tense, present_tense, progressive],
-                                    'result_id': sentence_results.pk}
+            sentences_dictionary = {
+                'sentences': sentence_results,
+                'sentence_type': ['Past Tense', 'Future Tense', 'Present Tense',
+                                  'Progressive', 'Negated', 'Perfect', 'Passive'],
+                'result_id': sentence_results.pk}
 
             return render(request, 'answer_display.html', context=sentences_dictionary)
     return render(request, 'stepwise.html', context=forms)

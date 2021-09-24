@@ -25,4 +25,3 @@ urlpatterns = [
     path('', include('website.urls')),
 ]
 urlpatterns += url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-
