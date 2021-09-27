@@ -114,7 +114,6 @@ def index(request):
                     'subjnum': subjnum,
 
                 }
-                type_of_sentence = ' '
                 iter_sentence_type = []
                 if 'tense' in grammar_arguments:
                     querystring['tense'] = grammar_arguments['tense'].capitalize()
@@ -140,7 +139,7 @@ def index(request):
 
                 if 'sentence_art' in grammar_arguments:
                     querystring['sentencetype'] = grammar_arguments['sentence_art']
-                type_of_sentence = type_of_sentence.join(iter_sentence_type)
+                type_of_sentence = ' '.join(iter_sentence_type)
 
                 headers = {
                     'x-rapidapi-host': "linguatools-sentence-generating.p.rapidapi.com",

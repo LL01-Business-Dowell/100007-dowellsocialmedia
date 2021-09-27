@@ -102,6 +102,7 @@ class SentenceResults(models.Model):
     sentence_grammar = models.ForeignKey(Sentences, on_delete=models.CASCADE)
     sentence = models.TextField(max_length=400)
     sentence_type = models.CharField(max_length=100)
+
     # sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
     # modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
 
@@ -112,5 +113,6 @@ class SentenceResults(models.Model):
 class SelectedResult(models.Model):
     sentence_result = models.ForeignKey(SentenceResults, on_delete=models.CASCADE)
     selected_sentence = models.CharField(max_length=200, null=False)
+
     def __str__(self):
         return self.selected_sentence
