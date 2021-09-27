@@ -116,6 +116,7 @@ def index(request):
                 }
                 iter_sentence_type = []
                 if 'tense' in grammar_arguments:
+                    # print('Current tense is {}'.format(grammar_arguments['tense']))
                     querystring['tense'] = grammar_arguments['tense'].capitalize()
                     iter_sentence_type.append(grammar_arguments['tense'].capitalize())
                 if 'progressive' in grammar_arguments:
@@ -139,6 +140,7 @@ def index(request):
 
                 if 'sentence_art' in grammar_arguments:
                     querystring['sentencetype'] = grammar_arguments['sentence_art']
+                iter_sentence_type.append("sentence.")
                 type_of_sentence = ' '.join(iter_sentence_type)
 
                 headers = {
@@ -178,7 +180,7 @@ def index(request):
             for tense in tenses:
                 for grammar in other_grammar:
                     sentence_results = SentenceResults(sentence_grammar=sentence_grammar)
-                    arguments = {tense: tense, grammar: grammar}
+                    arguments = {'tense': tense, grammar: grammar}
                     api_result = api_call(arguments)
                     sentence_results.sentence = api_result[0]
                     sentence_results.sentence_type = api_result[1]
@@ -189,7 +191,7 @@ def index(request):
                 'sentences': results,
                 # 'result_id': sentence_grammar.pk
             }
-            print(sentences_dictionary)
+            # print(sentences_dictionary)
             return render(request, 'answer_display.html', context=sentences_dictionary)
     return render(request, 'stepwise.html', context=forms)
 
