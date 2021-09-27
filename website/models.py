@@ -112,3 +112,5 @@ class SentenceResults(models.Model):
 class SelectedResult(models.Model):
     sentence_result = models.ForeignKey(SentenceResults, on_delete=models.CASCADE)
     selected_sentence = models.CharField(max_length=200, null=False)
+    def __str__(self):
+        return self.selected_sentence

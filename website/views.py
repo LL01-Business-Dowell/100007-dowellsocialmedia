@@ -161,49 +161,46 @@ def index(request):
                                                         subject_number=subjnum
                                                         )
 
-            tenses = ('past', 'present', 'future')
-            modal_verbs = (
-                '-none-', 'can', 'may',
-                'must', 'ought', 'shall',
-                'should', 'would'
-            )
+            tenses = ['past', 'present', 'future']
+            # modal_verbs = [
+            #     '-none-', 'can', 'may',
+            #     'must', 'ought', 'shall',
+            #     'should', 'would'
+            # ]
 
-            sentence_arts = (
-                'Declarative',
-                'Yes-no',
-                'What(object)',
-                'Who(subject)',
-
-            )
-            # sentence_arts = ('past', 'present', 'future')
+            # sentence_arts = [
+            #     'Declarative',
+            #     'Yes-no',
+            #     'What(object)',
+            #     'Who(subject)', ]
             other_grammar = ['passive', 'progressive', 'perfect', 'negated']
-            results=[]
+            results = []
+            count = 0
             for tense in tenses:
                 for grammar in other_grammar:
-                    for sentence_art in sentence_arts:
-                        for modal_verb in modal_verbs:
-                            sentence_results = SentenceResults(sentence_grammar=sentence_grammar)
-                            args = {}
-                            args[tense] = tense
-                            args[grammar] = grammar
-                            args[sentence_art] = sentence_art
-                            args[modal_verb] = modal_verb
-                            sentence_results.sentence = api_call(args)[0]
-                            sentence_results.sentence = api_call(args)[1]
-                            results.append(sentence_results.save())
+                    sentence_results = SentenceResults(sentence_grammar=sentence_grammar)
+                    arguments = {tense: tense, grammar: grammar}
+                    api_result = api_call(arguments)
+                    sentence_results.sentence = api_result[0]
+                    sentence_results.sentence_type = api_result[1]
+                    sentence_results.save()
+                    results.append(sentence_results)
 
             sentences_dictionary = {
                 'sentences': results,
-                'result_id': results[0].pk}
-
+                # 'result_id': sentence_grammar.pk
+            }
+            print(sentences_dictionary)
             return render(request, 'answer_display.html', context=sentences_dictionary)
     return render(request, 'stepwise.html', context=forms)
 
 
 def selected_result(request):
     if request.method == 'POST':
-        result_id = request.POST.get('result_id')
+        # result_id = request.POST.get('result_id')
         selected_result = request.POST.get('gridRadios')
-        selected_result_obj = SelectedResult.objects.create(sentence_result=SentenceResults.objects.get(pk=result_id),
-                                                            selected_sentence=selected_result)
-        return render(request, 'display_selected_result.html', {'sentence': selected_result})
+        sentence_result = SentenceResults.objects.get(pk=selected_result)
+        selected_result_obj = SelectedResult.objects.create(
+            sentence_result= sentence_result,
+            selected_sentence=sentence_result.sentence)
+        return render(request, 'display_selected_result.html', {'sentence': selected_result_obj})

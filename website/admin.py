@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 # Register your models here.
-from website.models import Sentences, SentenceResults
+from website.models import Sentences, SentenceResults, SelectedResult
 
 admin.site.register(Sentences)
 admin.site.register(SentenceResults)
+admin.site.register(SelectedResult)

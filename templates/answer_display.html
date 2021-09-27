@@ -41,7 +41,7 @@
 
 
         {% csrf_token %}
-        <input type="hidden" name="result_id" value="{{ result_id }}">
+{#        <input type="hidden" name="result_id" value="{{ result_id }}">#}
 
         {% for sentence in sentences %}
             <p>{{ sentence.sentence_type}}</p>
@@ -49,7 +49,7 @@
             <p>{{ sentence.sentence }}
 
                 <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
-                                                  id="gridRadios1" value="{{ sentence.sentence }}"></span></p>
+                                                  id="gridRadios1" value="{{ sentence.pk }}"></span></p>
 
         </div>
 
