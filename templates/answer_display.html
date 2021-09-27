@@ -43,77 +43,18 @@
         {% csrf_token %}
         <input type="hidden" name="result_id" value="{{ result_id }}">
 
-        <p>Past Tense sentence</p>
+        {% for sentence in sentences %}
+            <p>{{ sentence.sentence_type}}</p>
         <div class="answer">
-            <p>{{ sentences.past }}
+            <p>{{ sentence.sentence }}
 
                 <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
-                                                  id="gridRadios1" value="{{ sentences.past }}"></span></p>
+                                                  id="gridRadios1" value="{{ sentence.sentence }}"></span></p>
 
         </div>
 
         <br>
-        <p>Present Tense sentence</p>
-        <div class="answer">
-            <p>{{ sentences.present }}
-
-                <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
-                                                  id="gridRadios1" value="{{ sentences.present }}"></span></p>
-
-        </div>
-
-        <br>
-        <p>Future Tense sentence</p>
-        <div class="answer">
-            <p>{{ sentences.future }}
-
-                <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
-                                                  id="gridRadios1" value="{{ sentences.future }}"></span></p>
-
-        </div>
-
-        <br>
-        <p>Progressive sentence</p>
-        <div class="answer">
-            <p>{{ sentences.progressive }}
-
-                <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
-                                                  id="gridRadios1" value="{{ sentences.progressive }}"></span></p>
-
-        </div>
-
-        <br>
-        <p>Negated sentence</p>
-        <div class="answer">
-            <p>{{ sentences.negated }}
-
-                <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
-                                                  id="gridRadios1" value="{{ sentences.negated }}"></span></p>
-
-        </div>
-
-        <br>
-        <p>Perfect sentence</p>
-        <div class="answer">
-            <p>{{ sentences.perfect }}
-
-                <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
-                                                  id="gridRadios1" value="{{ sentences.perfect }}"></span></p>
-
-        </div>
-
-        <br>
-        <p>Passive sentence</p>
-        <div class="answer">
-            <p>{{ sentences.passive }}
-
-                <span class="answer_radio"><input class="form-check-input" type="radio" name="gridRadios"
-                                                  id="gridRadios1" value="{{ sentences.passive }}"></span></p>
-
-        </div>
-
-        <br>
-
+        {% endfor %}
         <button type="submit" class="btn btn-success">SUBMIT</button>
     </form>
 

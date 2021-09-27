@@ -100,9 +100,9 @@ def index(request):
             # # sentence.sentence = response.json()['sentence']
             # # sentence.save()
             # return render(request, 'answer_display.html', {'sentence': response.json()['sentence']})
-            def api_call(tense='present', passive=False, progressive=False, modal_verb=None, perfect=False,
-                         sentence_art=None,
-                         negated=False):
+            def api_call(grammar_arguments=None):
+                if grammar_arguments is None:
+                    grammar_arguments = {}
                 querystring = {
                     "object": object,
                     "subject": subject,
@@ -112,63 +112,89 @@ def index(request):
                     'objdet': objdet,
                     'objnum': objnum,
                     'subjnum': subjnum,
-                    'tense': tense
 
                 }
-                if progressive:
+                type_of_sentence = ' '
+                iter_sentence_type = []
+                if 'tense' in grammar_arguments:
+                    querystring['tense'] = grammar_arguments['tense'].capitalize()
+                    iter_sentence_type.append(grammar_arguments['tense'].capitalize())
+                if 'progressive' in grammar_arguments:
                     querystring['progressive'] = 'progressive'
-                if perfect:
+                    iter_sentence_type.append(grammar_arguments['progressive'])
+
+                if 'perfect' in grammar_arguments:
                     querystring['perfect'] = 'perfect'
+                    iter_sentence_type.append(grammar_arguments['perfect'])
 
-                if negated:
+                if 'negated' in grammar_arguments:
                     querystring['negated'] = 'negated'
+                    iter_sentence_type.append(grammar_arguments['negated'])
 
-                if passive:
+                if 'passive' in grammar_arguments:
                     querystring['passive'] = 'passive'
-                if modal_verb is not None:
-                    querystring['modal'] = modal_verb
-                if sentence_art is not None:
-                    querystring['sentencetype'] = sentence_art
+                    iter_sentence_type.append(grammar_arguments['passive'])
+
+                if 'modal_verb' in grammar_arguments:
+                    querystring['modal'] = grammar_arguments['modal_verb']
+
+                if 'sentence_art' in grammar_arguments:
+                    querystring['sentencetype'] = grammar_arguments['sentence_art']
+                type_of_sentence = type_of_sentence.join(iter_sentence_type)
 
                 headers = {
                     'x-rapidapi-host': "linguatools-sentence-generating.p.rapidapi.com",
                     'x-rapidapi-key': settings.LINGUA_KEY
                 }
 
-                return requests.request("GET", url, headers=headers, params=querystring).json()['sentence']
+                return [requests.request("GET", url, headers=headers, params=querystring).json()['sentence'],
+                        type_of_sentence]
 
-            sentence = Sentences.objects.create(user=user,
-                                                object=object,
-                                                subject=subject,
-                                                verb=verb,
-                                                adjective=adjective,
-                                                object_determinant=objdet,
-                                                subject_determinant=subjdet,
-                                                object_number=objnum,
-                                                subject_number=subjnum
-                                                )
-            sentence_results = SentenceResults(sentence=sentence)
-            past_tense = api_call(tense='past')
-            progressive = api_call(tense='past', progressive=True)
-            present_tense = api_call(tense='present')
-            future_tense = api_call(tense='future')
-            negated = api_call(negated=True)
-            perfect = api_call(perfect=True)
-            passive = api_call(passive=True)
-            sentence_results.past = past_tense
-            sentence_results.future = future_tense
-            sentence_results.progressive = progressive
-            sentence_results.present = present_tense
-            sentence_results.negated = negated
-            sentence_results.perfect = perfect
-            sentence_results.passive = passive
-            sentence_results.save()
+            sentence_grammar = Sentences.objects.create(user=user,
+                                                        object=object,
+                                                        subject=subject,
+                                                        verb=verb,
+                                                        adjective=adjective,
+                                                        object_determinant=objdet,
+                                                        subject_determinant=subjdet,
+                                                        object_number=objnum,
+                                                        subject_number=subjnum
+                                                        )
+
+            tenses = ('past', 'present', 'future')
+            modal_verbs = (
+                '-none-', 'can', 'may',
+                'must', 'ought', 'shall',
+                'should', 'would'
+            )
+
+            sentence_arts = (
+                'Declarative',
+                'Yes-no',
+                'What(object)',
+                'Who(subject)',
+
+            )
+            # sentence_arts = ('past', 'present', 'future')
+            other_grammar = ['passive', 'progressive', 'perfect', 'negated']
+            results=[]
+            for tense in tenses:
+                for grammar in other_grammar:
+                    for sentence_art in sentence_arts:
+                        for modal_verb in modal_verbs:
+                            sentence_results = SentenceResults(sentence_grammar=sentence_grammar)
+                            args = {}
+                            args[tense] = tense
+                            args[grammar] = grammar
+                            args[sentence_art] = sentence_art
+                            args[modal_verb] = modal_verb
+                            sentence_results.sentence = api_call(args)[0]
+                            sentence_results.sentence = api_call(args)[1]
+                            results.append(sentence_results.save())
 
             sentences_dictionary = {
-                'sentences': sentence_results,
-                'sentence_type': ['Past Tense', 'Future Tense', 'Present Tense',
-                                  'Progressive', 'Negated', 'Perfect', 'Passive'],
-                'result_id': sentence_results.pk}
+                'sentences': results,
+                'result_id': results[0].pk}
 
             return render(request, 'answer_display.html', context=sentences_dictionary)
     return render(request, 'stepwise.html', context=forms)

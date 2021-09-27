@@ -99,28 +99,11 @@ class Sentences(models.Model):
 
 
 class SentenceResults(models.Model):
-    MODAL_VERBS = (
-        ('-none-', '-none-'),
-        ('can', 'can'),
-        ('may', 'may'),
-        ('must', 'must'),
-        ('ought', 'ought'),
-        ('shall', 'shall'),
-        ('should', 'should'),
-        ('would', 'would'),
-
-    )
-    sentence = models.ForeignKey(Sentences, on_delete=models.CASCADE)
-    present = models.TextField(max_length=400, null=True, blank=True)
-    past = models.TextField(max_length=400, null=True, blank=True)
-    future = models.TextField(max_length=400, null=True, blank=True)
-    progressive = models.TextField(max_length=400, null=True, blank=True)
-    negated = models.TextField(max_length=400, null=True, blank=True)
-    perfect = models.TextField(max_length=400, null=True, blank=True)
-    passive = models.TextField(max_length=400, null=True, blank=True)
-
+    sentence_grammar = models.ForeignKey(Sentences, on_delete=models.CASCADE)
+    sentence = models.TextField(max_length=400)
+    sentence_type = models.CharField(max_length=100)
     # sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
-    modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
+    # modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
 
     class Meta:
         verbose_name_plural = 'Sentence results'
