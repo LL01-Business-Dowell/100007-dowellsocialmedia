@@ -41,14 +41,14 @@
 
 
         {% csrf_token %}
-{#        <input type="hidden" name="result_id" value="{{ result_id }}">#}
+        {#        <input type="hidden" name="result_id" value="{{ result_id }}">#}
 
         {% for sentence in sentences %}
-            <p>{{ sentence.sentence_type}}</p>
-        <div class="answer">
-            <p>{{ sentence.sentence }}
+            <p>{{ sentence.sentence_type }}</p>
+            <div class="answer">
+                <p>{{ sentence.sentence }}
 
-                <span class="answer_radio"><label>
+                    <span class="answer_radio"><label>
 <select name="rank_{{ forloop.counter }}">
     <option value="1">1</option>
     <option value="2">2</option>
@@ -65,9 +65,9 @@
 </select>
 </label></span></p>
 
-        </div>
+            </div>
 
-        <br>
+            <br>
         {% endfor %}
         <button type="submit" class="btn btn-success">SUBMIT</button>
     </form>

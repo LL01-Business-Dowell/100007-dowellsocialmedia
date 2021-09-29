@@ -107,6 +107,7 @@ class SentenceResults(models.Model):
     # modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
     def __str__(self):
         return self.sentence
+
     class Meta:
         verbose_name_plural = 'Sentence results'
 
