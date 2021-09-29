@@ -105,14 +105,15 @@ class SentenceResults(models.Model):
 
     # sentence_art = models.CharField(max_length=100, blank=False, choices=SENTENCE_ARTS, default=SENTENCE_ARTS[0][0])
     # modal_verb = models.CharField(max_length=100, blank=False, choices=MODAL_VERBS, default=MODAL_VERBS[0][0])
-
+    def __str__(self):
+        return self.sentence
     class Meta:
         verbose_name_plural = 'Sentence results'
 
 
-class SelectedResult(models.Model):
+class SentenceRank(models.Model):
     sentence_result = models.ForeignKey(SentenceResults, on_delete=models.CASCADE)
-    selected_sentence = models.CharField(max_length=200, null=False)
+    sentence_rank = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.selected_sentence
+        return self.sentence_result.sentence

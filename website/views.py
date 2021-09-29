@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from gform2website import settings
 from website.forms import UserEmailForm, IndustryForm, SentencesForm
-from website.models import Sentences, SentenceResults, SelectedResult
+from website.models import Sentences, SentenceResults, SentenceRank
 
 
 def index(request):
@@ -163,19 +163,9 @@ def index(request):
                                                         )
 
             tenses = ['past', 'present', 'future']
-            # modal_verbs = [
-            #     '-none-', 'can', 'may',
-            #     'must', 'ought', 'shall',
-            #     'should', 'would'
-            # ]
-
-            # sentence_arts = [
-            #     'Declarative',
-            #     'Yes-no',
-            #     'What(object)',
-            #     'Who(subject)', ]
             other_grammar = ['passive', 'progressive', 'perfect', 'negated']
             results = []
+            result_ids = []
             count = 0
             for tense in tenses:
                 for grammar in other_grammar:
@@ -186,22 +176,25 @@ def index(request):
                     sentence_results.sentence_type = api_result[1]
                     sentence_results.save()
                     results.append(sentence_results)
-
+                    result_ids.append(sentence_results.pk)
+            request.session['result_ids'] = result_ids
             sentences_dictionary = {
                 'sentences': results,
-                # 'result_id': sentence_grammar.pk
             }
-            # print(sentences_dictionary)
             return render(request, 'answer_display.html', context=sentences_dictionary)
     return render(request, 'stepwise.html', context=forms)
 
 
 def selected_result(request):
     if request.method == 'POST':
-        # result_id = request.POST.get('result_id')
-        selected_result = request.POST.get('gridRadios')
-        sentence_result = SentenceResults.objects.get(pk=selected_result)
-        selected_result_obj = SelectedResult.objects.create(
-            sentence_result= sentence_result,
-            selected_sentence=sentence_result.sentence)
-        return render(request, 'display_selected_result.html', {'sentence': selected_result_obj})
+        # sentences = request.session.get('sentences')
+        sentence_ids = request.session.get('result_ids')
+        loop_counter = 1
+        for sentence_id in sentence_ids:
+            selected_rank = request.POST.get('rank_{}'.format(loop_counter))
+            loop_counter += 1
+            sentence_result = SentenceResults.objects.get(pk=sentence_id)
+            selected_result_obj = SentenceRank.objects.create(
+                sentence_result=sentence_result, sentence_rank=selected_rank
+            )
+        return render(request, 'display_selected_result.html')
