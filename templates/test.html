@@ -122,18 +122,28 @@
     </select>
 </div>
 <script>
-
     $(function () {
+
+
         $('select').on('change', function (event) { // This binds listeners to the change event on all the select elements
             var sId = this.id; // store off the changed element id
             var vId = this.value; // store off the changed element value
             $('select').each(function () { // this loops across the same set of elements
                 if (this.id !== sId && this.value === vId) { // If it is not the triggering element and the value is the same, do something
-                    this.options.selectedIndex = 0; // reset the value to 'rank'
+                    if (!window.confirm("This rank is already used. Would you like to use it for this sentence?")) {
+                        $(this).val($.data(this, 'current'));
+                        return false;
+
+                    } else {
+                        this.options.selectedIndex = 0; // reset the value to 'rank'
+
+                    }
+                        $.data(this, 'current', $(this).val());
                 }
             });
         });
     });
+
 
 </script>
 

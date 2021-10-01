@@ -8,6 +8,7 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
 <style>
+    {#    todo transfer it to an independent #}
     * {
         box-sizing: border-box;
     }
@@ -43,7 +44,6 @@
 
 
         {% csrf_token %}
-        {#        <input type="hidden" name="result_id" value="{{ result_id }}">#}
 
         {% for sentence in sentences %}
             <p>{{ sentence.sentence_type }}</p>
@@ -51,7 +51,8 @@
                 <p>{{ sentence.sentence }}
 
                     <span class="answer_rank"><label>
-<select name="rank_{{ forloop.counter }}" class="sel">
+{#                        attach counter to class and name tags values for uniqueness#}
+<select name="rank_{{ forloop.counter }}" class="sel" id="selector_{{ forloop.counter }}">
                 <option value="#" selected="selected">Rank...</option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -76,18 +77,26 @@
     </form>
 
 </div>
+{#    fixme it sucks to use a library for one task, but I'll find  a solution for this#}
 
 <script>
     $(function () {
+
+
         $('select').on('change', function (event) { // This binds listeners to the change event on all the select elements
             var sId = this.id; // store off the changed element id
             var vId = this.value; // store off the changed element value
             $('select').each(function () { // this loops across the same set of elements
                 if (this.id !== sId && this.value === vId) { // If it is not the triggering element and the value is the same, do something
-                    if (window.confirm("This rank is already used. Would you like to use it for this sentence?")) {
+                    if (!window.confirm("This rank is already used. Would you like to use it for this sentence?")) {
+                        $(this).val($.data(this, 'current'));
+                        return false;
+
+                    } else {
                         this.options.selectedIndex = 0; // reset the value to 'rank'
 
                     }
+                        $.data(this, 'current', $(this).val());
                 }
             });
         });
