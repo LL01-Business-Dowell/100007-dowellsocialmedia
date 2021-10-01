@@ -2,6 +2,8 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
@@ -30,7 +32,7 @@
         padding: 4px
     }
 
-    .answer_radio {
+    .answer_rank {
         float: right;
     }
 </style>
@@ -48,8 +50,9 @@
             <div class="answer">
                 <p>{{ sentence.sentence }}
 
-                    <span class="answer_radio"><label>
-<select name="rank_{{ forloop.counter }}">
+                    <span class="answer_rank"><label>
+<select name="rank_{{ forloop.counter }}" class="sel">
+                <option value="#" selected="selected">Rank...</option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
@@ -74,7 +77,22 @@
 
 </div>
 
+<script>
+    $(function () {
+        $('select').on('change', function (event) { // This binds listeners to the change event on all the select elements
+            var sId = this.id; // store off the changed element id
+            var vId = this.value; // store off the changed element value
+            $('select').each(function () { // this loops across the same set of elements
+                if (this.id !== sId && this.value === vId) { // If it is not the triggering element and the value is the same, do something
+                    if (window.confirm("This rank is already used. Would you like to use it for this sentence?")) {
+                        this.options.selectedIndex = 0; // reset the value to 'rank'
 
+                    }
+                }
+            });
+        });
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
