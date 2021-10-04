@@ -40,7 +40,7 @@
 <body>
 
 <div id="ansDisplay">
-    <form method="post" action="{% url 'selected_result' %}">
+    <form id='rateForm' method="post" action="{% url 'selected_result' %}">
 
 
         {% csrf_token %}
@@ -52,8 +52,8 @@
 
                     <span class="answer_rank"><label>
 {#                        attach counter to class and name tags values for uniqueness#}
-<select name="rank_{{ forloop.counter }}" class="sel" id="selector_{{ forloop.counter }}">
-                <option value="#" selected="selected">Rank...</option>
+<select name="rank_{{ forloop.counter }}" class="required" id="selector_{{ forloop.counter }}">
+                <option selected="selected" value="" disabled="disabled">Rank</option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
@@ -80,6 +80,25 @@
 {#    fixme it sucks to use a library for one task, but I'll find  a solution for this#}
 
 <script>
+
+   $( "#rateForm" ).validate({
+    rules: {
+        rank_1: { required: true },
+        rank_2: { required: true },
+        rank_3: { required: true },
+        rank_4: { required: true },
+        rank_5: { required: true },
+        rank_6: { required: true },
+        rank_7: { required: true },
+        rank_8: { required: true },
+        rank_9: { required: true },
+        rank_10: { required: true },
+        rank_11: { required: true },
+        rank_12: { required: true }
+    }
+});
+
+
     $(function () {
 
 
@@ -88,7 +107,7 @@
             var vId = this.value; // store off the changed element value
             $('select').each(function () { // this loops across the same set of elements
                 if (this.id !== sId && this.value === vId) { // If it is not the triggering element and the value is the same, do something
-                                           this.options.selectedIndex = 0; // reset the value to 'rank'
+                    this.options.selectedIndex = 0; // reset the value to 'rank'
 
 
                     /* if (!window.confirm("This rank is already used. Would you like to use it for this sentence?")) {
@@ -98,7 +117,7 @@
                     } else {
 
                     }*/
-                        $.data(this, 'current', $(this).val());
+                    $.data(this, 'current', $(this).val());
                 }
             });
         });
